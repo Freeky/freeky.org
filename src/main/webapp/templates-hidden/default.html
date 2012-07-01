@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:lift="http://liftweb.net/">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>Freeky.org | <span class="lift:Menu.title">code:app:0.1-SNAPSHOT</span>
+</title>
+<link href="/css/screen.css" type="text/css" rel="stylesheet"
+	media="screen, projection" />
+<link href="/css/print.css" type="text/css" rel="stylesheet"
+	media="print" />
+<script id="jquery" src="/classpath/jquery.js" type="text/javascript" />
+</head>
+<body>
+	<div class="container">
+		<div class="containerbox headerbox">
+			<div class="logo">
+				<img src="/images/logo.png" />
+			</div>
+			<div class="headerform">
+				<lift:UserAction.login form="POST">
+			Email: <login:email />
+			Password: <login:password />
+					<login:submit />
+				</lift:UserAction.login>
+				<lift:UserAction.status form="POST">
+			Logged in as: <status:username />
+					<status:logout />
+				</lift:UserAction.status>
+			</div>
+		</div>
+		<div>
+			<div class="column span-5 sidebar containerbox">
+				<div class="lift:Menu.builder?linkToSelf=true&expandAll=true;"></div>
+			</div>
+			<div class="column last contentbox containerbox">
+				<lift:msgs>
+					<lift:error_msg>Error:</lift:error_msg>
+					<lift:error_class>errorBox</lift:error_class>
+					<lift:warning_msg>Warning:</lift:warning_msg>
+					<lift:warning_class>warningBox</lift:warning_class>
+					<lift:notice_msg>Note:</lift:notice_msg>
+					<lift:notice_class>noticeBox</lift:notice_class>
+				</lift:msgs>
+				<lift:bind name="content" />
+			</div><br />
+			<div class="column span-23 last footer">
+				freeky.org is Copyright 2011-2012 by Freeky</div>
+		</div>
+	</div>
+</body>
+</html>

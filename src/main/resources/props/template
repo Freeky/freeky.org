@@ -1,0 +1,14 @@
+# Properties in this file will be read when running in dev mode
+db.url=jdbc:mysql://localhost:3306/db
+db.user=user
+db.password=password
+
+acc.default=2
+acc.new=3
+acc.login.attempts=3
+
+mail.smtp.auth=true
+mail.smtp.host=host
+mail.smtp.port=587
+mail.user=noreply@freeky.org
+mail.password=password
