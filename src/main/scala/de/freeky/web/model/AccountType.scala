@@ -12,9 +12,13 @@ class AccountType(val id: Long,
     var rLogin: Boolean,
     var rAdministrateUsers: Boolean,
     var rEditProjects: Boolean,
-    var rSendMail: Boolean) extends KeyedEntity[Long] {
+    var rSendMail: Boolean,
+    var rEditStaticPages: Boolean,
+    var rEditBlog: Boolean) extends KeyedEntity[Long] {
   
-  def this() = this(0, "", None, false, false, false, false)
+  def this() = this(0, "", None, false, false, false, false, false, false)
   
   lazy val users: OneToMany[User] = FreekyDB.accountTypeToUser.left(this)
+  
+  def hasAdminrights = rAdministrateUsers || rEditBlog || rEditProjects || rEditStaticPages
 }

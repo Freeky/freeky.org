@@ -4,7 +4,7 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-<title>Freeky.org | <span class="lift:Menu.title">code:app:0.1-SNAPSHOT</span>
+<title><span class="lift:Menu.title">code:app:0.1-SNAPSHOT</span>
 </title>
 <link href="/css/screen.css" type="text/css" rel="stylesheet"
 	media="screen, projection" />
@@ -16,7 +16,9 @@
 	<div class="container">
 		<div class="containerbox headerbox">
 			<div class="logo">
-				<img src="/images/logo.png" />
+				<span class="lift:Menu.item?linkToSelf=true&name=home;"> <img
+					src="/images/logo.png" alt="Freeky.org" />
+				</span>
 			</div>
 			<div class="headerform">
 				<lift:UserAction.login form="POST">
@@ -26,6 +28,7 @@
 				</lift:UserAction.login>
 				<lift:UserAction.status form="POST">
 			Logged in as: <status:username />
+			<lift:Menu.item name="options"/>
 					<status:logout />
 				</lift:UserAction.status>
 			</div>
@@ -35,18 +38,19 @@
 				<div class="lift:Menu.builder?linkToSelf=true&expandAll=true;"></div>
 			</div>
 			<div class="column last contentbox containerbox">
-				<lift:msgs>
+				<div class = "lift:msgs">
 					<lift:error_msg>Error:</lift:error_msg>
 					<lift:error_class>errorBox</lift:error_class>
 					<lift:warning_msg>Warning:</lift:warning_msg>
 					<lift:warning_class>warningBox</lift:warning_class>
 					<lift:notice_msg>Note:</lift:notice_msg>
 					<lift:notice_class>noticeBox</lift:notice_class>
-				</lift:msgs>
+				</div>
 				<lift:bind name="content" />
-			</div><br />
-			<div class="column span-23 last footer">
-				freeky.org is Copyright 2011-2012 by Freeky</div>
+			</div>
+			<br />
+			<div class="column span-23 last footer">freeky.org is Copyright
+				2011-2012 by Freeky</div>
 		</div>
 	</div>
 </body>

@@ -1,7 +1,7 @@
 -- table declarations :
 create table User (
     name varchar(20) not null,
-    email varchar(256) not null,
+    email varchar(128) not null,
     id bigint primary key not null auto_increment,
     passwordhash varchar(30) not null,
     passwordsalt varchar(20) not null,
@@ -15,8 +15,10 @@ create table AccountType (
     name varchar(20) not null,
     rLogin boolean not null,
     description varchar(1000),
+    rEditBlog boolean not null,
     id bigint primary key not null auto_increment,
     rAdministrateUsers boolean not null,
+    rEditStaticPages boolean not null,
     rEditProjects boolean not null,
     rSendMail boolean not null
   );
@@ -35,8 +37,26 @@ create table Project (
     name varchar(128) not null,
     description varchar(256) not null,
     text text not null,
+    modified datetime not null,
     id bigint primary key not null auto_increment
+  );
+create table StaticPage (
+    name varchar(64) not null,
+    lastModified datetime not null,
+    id bigint primary key not null auto_increment,
+    content text not null
+  );
+-- indexes on StaticPage
+create unique index idx2e0405b4 on StaticPage (name);
+create table Blog (
+    text text not null,
+    modified datetime not null,
+    id bigint primary key not null auto_increment,
+    authorId bigint not null,
+    title varchar(256) not null,
+    created datetime not null
   );
 -- foreign key constraints :
 alter table User add constraint UserFK1 foreign key (accounttypeId) references AccountType(id);
 alter table LoginAttempt add constraint LoginAttemptFK2 foreign key (userId) references User(id);
+alter table Blog add constraint BlogFK3 foreign key (authorId) references User(id);

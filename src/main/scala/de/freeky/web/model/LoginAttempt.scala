@@ -3,7 +3,6 @@ package de.freeky.web.model
 import net.liftweb.util.Helpers._
 import org.squeryl.KeyedEntity
 import org.squeryl.dsl.ManyToOne
-import java.util.Date
 import java.sql.Timestamp
 
 class LoginAttempt(val id: Long,

@@ -10,6 +10,10 @@ import Helpers._
 import org.squeryl.PrimitiveTypeMode._
 import de.freeky.web.model._
 import S._
+import net.liftweb.http.js._
+import JE._
+import JsCmds._
+import JsExp._
 
 class HelloWorld extends StatefulSnippet {
   
@@ -24,10 +28,14 @@ class HelloWorld extends StatefulSnippet {
 
   var nodeSeq: NodeSeq = NodeSeq.Empty
 
+  def doSomething() = S.notice("send2")
+  
   def create = 
-    ".subnode" #> { (n: NodeSeq) => nodeSeq = n; n } &
-      ".node" #> nodeSeq &
-      ".node2" #> nodeSeq
+    ".button1" #> SHtml.submit("Drück mich",() => S.notice("send"), "onclick" -> 
+    	JsIf(JsRaw("confirm('Sind Sie sicher?')"), 
+      JsReturn(true), JsReturn(false)).toJsCmd
+    ) &
+    ".button2" #> SHtml.submit("Drück mich auch", doSomething)
 
 }
 

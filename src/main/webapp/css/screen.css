@@ -295,3 +295,9 @@ body {background-image: url('/images/bg.jpg');background-attachment: fixed;backg
 .headerform {float: right;margin-top: 25px}
 .footer {text-align: center; font-size: 0.8em;text-shadow: 1px 1px rgb(80,80,80);}
 .logo {position: absolute}
+.errorBox {border: 1px solid red; background-color: #f77; padding: 5px; margin-bottom: 15px;}
+.errorBox ul {margin-bottom: 0px; }
+.warningBox {border: 1px solid #f60; background-color: #fa0; padding: 5px; margin-bottom: 15px;}
+.warningBox ul {margin-bottom: 0px; }
+.noticeBox {border: 1px solid #33f; background-color: #aaf; padding: 5px; margin-bottom: 15px;}
+.noticeBox ul {margin-bottom: 0px; }

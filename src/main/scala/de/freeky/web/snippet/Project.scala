@@ -8,6 +8,7 @@ import scala.xml._
 import Helpers._
 import org.squeryl.PrimitiveTypeMode._
 import de.freeky.web.model._
+import de.freeky.web.lib.AjaxFactory._
 import net.liftweb.http.js.JsCmds
 import net.liftweb.http.js.JsCmd
 import net.liftweb.http.js.JE.Call
@@ -80,7 +81,7 @@ class Project extends DispatchSnippet with Logger {
 
               ".title" #> SHtml.text(project.name, project.name = _) &
                 ".description" #> SHtml.textarea(project.description, project.description = _) &
-                ".text" #> SHtml.ajaxTextarea(project.text, updatePreview _) &
+                ".text" #> ajaxLiveTextarea(project.text, updatePreview _) &
                 ".submit" #> SHtml.submit(S ? "submit", processEdit) &
                 ".delete" #> SHtml.submit(S ? "delete", processDelete) &
                 "#previewarea *" #> preview
@@ -126,7 +127,7 @@ class Project extends DispatchSnippet with Logger {
 
     ".title" #> SHtml.text(project.name, project.name = _) &
       ".description" #> SHtml.textarea(project.description, project.description = _) &
-      ".text" #> SHtml.ajaxTextarea(project.text, updatePreview _) &
+      ".text" #> ajaxLiveTextarea(project.text, updatePreview _) &
       ".submit" #> SHtml.submit(S ? "submit", processEdit) &
       "#previewarea *" #> preview
   }

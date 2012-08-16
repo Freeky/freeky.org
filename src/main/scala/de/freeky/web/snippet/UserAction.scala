@@ -117,7 +117,7 @@ class UserAction extends StatefulSnippet with Logger {
     errors
   }
 
-   def login(in: NodeSeq): NodeSeq = {
+  def login(in: NodeSeq): NodeSeq = {
 
     def processLogin(): Unit = {
       transaction {
@@ -223,8 +223,8 @@ class UserAction extends StatefulSnippet with Logger {
             transaction {
               FreekyDB.users.update(user)
             }
-            S.redirectTo("options")
             S.notice(S ? "new.password.set")
+            S.redirectTo("/options")
           } else {
             errors.foreach(S.error(_))
           }
@@ -252,7 +252,12 @@ class UserAction extends StatefulSnippet with Logger {
       loggedInUser.is match {
         case Full(user) => {
           user.email = email
-          FreekyDB.users.update(user)
+          transaction {
+            FreekyDB.users.update(user)
+          }
+
+          S.notice(S ? "new.email.set")
+          S.redirectTo("/options")
         }
         case _ => S.error(S ? "no.permission")
       }

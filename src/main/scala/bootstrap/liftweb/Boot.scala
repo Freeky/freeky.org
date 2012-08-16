@@ -30,18 +30,26 @@ class Boot {
 
     // Build SiteMap
     val entries = List(
-      Menu(S ? "home") / "index",
+      Menu("home", S ? "home") / "index",
+      Menu(S ? "blog") / "blog",
       Menu(S ? "projects") / "projects",
       Menu(S ? "about") / "about",
       Menu(S ? "register") / "register" >> Hidden >> If(() => !User.loggedIn_?(), S ? "no.permission"),
-      Menu(S ? "options") / "options" >> If(() => User.loggedIn_?(), S ? "no.permission") >> LocGroup("main"),
-      Menu("changemail", S ? "change.mail") / "options" / "changemail" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
-      Menu("changepassword", S ? "change.password") / "options" / "changepassword" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
-      Menu("deleteaccount", S ? "delete.account") / "options" / "deleteaccount" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
-      Menu("administrate.users", S ? "administrate.users") / "administration" / "users" >> If(() => (User.rights.rAdministrateUsers), S ? "no.permission"),
-      Menu("edit.projects", S ? "edit.projects") / "edit" / "project" >> If(() => (User.rights.rEditProjects), S ? "no.permission"),
-      Menu("new.project", S ? "new.projects") / "new" / "project" >> If(() => (User.rights.rEditProjects), S ? "no.permission"),
-      Menu("send.mail", S ? "send.mail") / "administration" / "sendmail" >> If(() => (User.rights.rSendMail), S ? "no.permission"),
+      Menu("options", S ? "options") / "options" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission") >> LocGroup("main"),
+      Menu(S ? "administration") / "administration" >> If(() => User.rights.hasAdminrights, S ? "no.permission") submenus (
+        Menu(S ? "blog.list") / "blog" / "list" >> If(() => User.rights.rEditBlog, S ? "no.permission"),
+        Menu(S ? "blog.create") / "blog" / "create" >> If(() => User.rights.rEditBlog, S ? "no.permission"),
+        Menu(S ? "blog.edit") / "blog" / "edit" >> Hidden >> If(() => User.rights.rEditBlog, S ? "no.permission"),
+        Menu(S ? "blog.delete") / "blog" / "delete" >> Hidden >> If(() => User.rights.rEditBlog, S ? "no.permission"),
+        Menu("changemail", S ? "change.mail") / "options" / "changemail" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
+        Menu("changepassword", S ? "change.password") / "options" / "changepassword" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
+        Menu("deleteaccount", S ? "delete.account") / "options" / "deleteaccount" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
+        Menu("administrate.users", S ? "administrate.users") / "administration" / "users" >> If(() => (User.rights.rAdministrateUsers), S ? "no.permission"),
+        Menu("edit.projects", S ? "edit.projects") / "edit" / "project" >> If(() => (User.rights.rEditProjects), S ? "no.permission"),
+        Menu("new.project", S ? "new.projects") / "new" / "project" >> If(() => (User.rights.rEditProjects), S ? "no.permission"),
+        //Menu("send.mail", S ? "send.mail") / "administration" / "sendmail" >> If(() => (User.rights.rSendMail), S ? "no.permission"),
+        Menu("list.staticpages", S ? "list.staticpages") / "administration" / "staticpage" / "list" >> If(() => (User.rights.rEditStaticPages), S ? "no.permission"),
+        Menu("edit.staticpages", S ? "edit.staticpages") / "administration" / "staticpage" / "edit" >> Hidden >> If(() => (User.rights.rEditStaticPages), S ? "no.permission")),
       Menu("") / "css" / ** >> Hidden,
       Menu("") / "images" / ** >> Hidden,
       Menu("") / "js" / ** >> Hidden,
@@ -52,6 +60,7 @@ class Boot {
     LiftRules.setSiteMap(SiteMap(entries: _*))
 
     appendRewrites
+    LiftRules.statelessDispatchTable.append(de.freeky.web.lib.MySitemap)
 
     // Use jQuery 1.4
     LiftRules.jsArtifacts = net.liftweb.http.js.jquery.JQuery14Artifacts
@@ -68,7 +77,7 @@ class Boot {
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
 
     // Set i18n support
-    LiftRules.resourceNames = "i18n/ni" :: LiftRules.resourceNames
+    LiftRules.resourceNames = "i18n/fky" :: LiftRules.resourceNames
 
     // Define the loggedInTest
     LiftRules.loggedInTest = Full(() => loggedInUser.isDefined)
@@ -121,6 +130,24 @@ class Boot {
       case RewriteRequest(
         ParsePath(List("edit", "project", id), _, _, _), _, _) =>
         RewriteResponse("edit" :: "project" :: Nil, Map("id" -> id))
+      case RewriteRequest(
+        ParsePath(List("administration", "staticpage", "edit", id), _, _, _), _, _) =>
+        RewriteResponse("administration" :: "staticpage" :: "edit" :: Nil, Map("id" -> id))
+      case RewriteRequest(
+        ParsePath(List("blog", "page", page), _, _, _), _, _) if (page.forall(_.isDigit)) =>
+        RewriteResponse("blog" :: Nil, Map("page" -> page))
+      case RewriteRequest(
+        ParsePath(List("blog", "list", "page", page), _, _, _), _, _) if (page.forall(_.isDigit)) =>
+        RewriteResponse("blog" :: "list" :: Nil, Map("page" -> page))
+      case RewriteRequest(
+        ParsePath(List("blog", "edit", id), _, _, _), _, _) if (id.forall(_.isDigit)) =>
+        RewriteResponse("blog" :: "edit" :: Nil, Map("id" -> id))
+      case RewriteRequest(
+        ParsePath(List("blog", "delete", id), _, _, _), _, _) if (id.forall(_.isDigit)) =>
+        RewriteResponse("blog" :: "delete" :: Nil, Map("id" -> id))
+      case RewriteRequest(
+        ParsePath(List("blog", id), _, _, _), _, _) if (id.forall(_.isDigit)) =>
+        RewriteResponse("blog" :: Nil, Map("id" -> id))
     }
   }
 }
