@@ -18,6 +18,8 @@ import java.io.FileOutputStream
 import java.io.PrintWriter
 import net.liftweb.util.Mailer._
 import javax.mail.{ Authenticator, PasswordAuthentication }
+import de.freeky.web.snippet.Images
+import java.net.URL
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -25,7 +27,7 @@ import javax.mail.{ Authenticator, PasswordAuthentication }
  */
 class Boot {
   def boot {
-    // where to search snippet
+     // where to search snippet
     LiftRules.addToPackages("de.freeky.web")
 
     // Build SiteMap
@@ -41,15 +43,20 @@ class Boot {
         Menu(S ? "blog.create") / "blog" / "create" >> If(() => User.rights.rEditBlog, S ? "no.permission"),
         Menu(S ? "blog.edit") / "blog" / "edit" >> Hidden >> If(() => User.rights.rEditBlog, S ? "no.permission"),
         Menu(S ? "blog.delete") / "blog" / "delete" >> Hidden >> If(() => User.rights.rEditBlog, S ? "no.permission"),
-        Menu("changemail", S ? "change.mail") / "options" / "changemail" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
-        Menu("changepassword", S ? "change.password") / "options" / "changepassword" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
-        Menu("deleteaccount", S ? "delete.account") / "options" / "deleteaccount" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
         Menu("administrate.users", S ? "administrate.users") / "administration" / "users" >> If(() => (User.rights.rAdministrateUsers), S ? "no.permission"),
         Menu("edit.projects", S ? "edit.projects") / "edit" / "project" >> If(() => (User.rights.rEditProjects), S ? "no.permission"),
         Menu("new.project", S ? "new.projects") / "new" / "project" >> If(() => (User.rights.rEditProjects), S ? "no.permission"),
         //Menu("send.mail", S ? "send.mail") / "administration" / "sendmail" >> If(() => (User.rights.rSendMail), S ? "no.permission"),
         Menu("list.staticpages", S ? "list.staticpages") / "administration" / "staticpage" / "list" >> If(() => (User.rights.rEditStaticPages), S ? "no.permission"),
-        Menu("edit.staticpages", S ? "edit.staticpages") / "administration" / "staticpage" / "edit" >> Hidden >> If(() => (User.rights.rEditStaticPages), S ? "no.permission")),
+        Menu("edit.staticpages", S ? "edit.staticpages") / "administration" / "staticpage" / "edit" >> Hidden >> If(() => (User.rights.rEditStaticPages), S ? "no.permission"),
+        Menu(S ? "image.list") / "image" / "list" >> If(() => User.rights.rManageImages, S ? "no.permission"),
+        Menu(S ? "image.upload") / "image" / "upload" >> If(() => User.rights.rManageImages, S ? "no.permission"),
+        Menu(S ? "image.detail") / "image" / "detail" >> Hidden >> If(() => User.rights.rManageImages, S ? "no.permission")),
+      Menu("changemail", S ? "change.mail") / "options" / "changemail" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
+      Menu("changepassword", S ? "change.password") / "options" / "changepassword" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
+      Menu("deleteaccount", S ? "delete.account") / "options" / "deleteaccount" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
+      Menu(S ? "impressum") / "impressum" >> Hidden,
+      Menu(S ? "contact") / "contact" >> Hidden,
       Menu("") / "css" / ** >> Hidden,
       Menu("") / "images" / ** >> Hidden,
       Menu("") / "js" / ** >> Hidden,
@@ -78,6 +85,16 @@ class Boot {
 
     // Set i18n support
     LiftRules.resourceNames = "i18n/fky" :: LiftRules.resourceNames
+
+    // Filesizes for Upload
+    LiftRules.maxMimeFileSize = 2 * 1024 * 1024 // 2MB
+    LiftRules.maxMimeSize = 512 * 1024 * 1024 // 512MB
+    
+    // Dispatches
+    LiftRules.dispatch.append {
+      case Req("image" :: secure :: name :: Nil, fileType, _) if (!secure.eq("list") && !secure.eq("detail") && !secure.eq("upload")) =>
+        () => Images.serveImage(secure, "%s.%s".format(name, fileType))
+    }
 
     // Define the loggedInTest
     LiftRules.loggedInTest = Full(() => loggedInUser.isDefined)
@@ -148,6 +165,12 @@ class Boot {
       case RewriteRequest(
         ParsePath(List("blog", id), _, _, _), _, _) if (id.forall(_.isDigit)) =>
         RewriteResponse("blog" :: Nil, Map("id" -> id))
+      case RewriteRequest(
+        ParsePath(List("iamge", "list", "page", page), _, _, _), _, _) if (page.forall(_.isDigit)) =>
+        RewriteResponse("image" :: "list" :: Nil, Map("page" -> page))
+      case RewriteRequest(
+        ParsePath(List("image", "detail", id), _, _, _), _, _) if (id.forall(_.isDigit)) =>
+        RewriteResponse("image" :: "detail" :: Nil, Map("id" -> id))
     }
   }
 }

@@ -5,8 +5,14 @@
 </head>
 <body class="lift:content_id=main">
 	<div id="main" class="lift:surround?with=default;at=content">
-		<head><title>Projects</title></head>
-		 <span class="lift:Project.show" />
+	<h2>Upload Image</h2>
+	<p>
+		<form class="lift:Images.upload?form=POST&multipart=true;">
+			<input type="file" class="fileupload"  multiple="multiple"/>
+			<br />
+			<button type="submit" class="submit">Submit</button>
+		</form>
+	</p>
 	</div>
 </body>
 </html>

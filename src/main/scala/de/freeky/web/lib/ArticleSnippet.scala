@@ -1,20 +1,18 @@
 package de.freeky.web.snippet
 
-import net.liftweb.common.Failure
-import _root_.scala.xml.{ NodeSeq, Text }
-import _root_.net.liftweb.util.Helpers
-import _root_.net.liftweb.http._
-import Helpers._
-import S._
 import java.text.SimpleDateFormat
-import de.freeky.web.lib.AjaxFactory._
-import net.liftweb.textile._
+
+import org.squeryl.PrimitiveTypeMode._
+import org.squeryl.Table
+
+import de.freeky.web.lib.AjaxFactory.ajaxLiveTextarea
+import de.freeky.web.model._
 import net.liftweb.http.js.JsCmd
 import net.liftweb.http.js.JsCmds
-import de.freeky.web.model._
-import org.squeryl.Table
-import org.squeryl.PrimitiveTypeMode._
-import net.liftweb.util.CssSel
+import net.liftweb.http._
+import net.liftweb.textile.TextileParser
+import net.liftweb.util._
+import Helpers._
 
 /**
  * List of generic Urls:
@@ -86,8 +84,9 @@ trait ArticleSnippet[U <: Article] extends DispatchSnippet {
       ".title *" #> a.title &
         ".text *" #> TextileParser.paraFixer(TextileParser.toHtml(a.text)) &
         ".date" #> timestamp.format(a.created) &
-        ".author" #> transaction{a.author.headOption.map(_.name).getOrElse("unknown")} &
-        ".id" #> a.id)
+        ".author" #> transaction { a.author.headOption.map(_.name).getOrElse("unknown") } &
+        ".id" #> a.id &
+        ".link [href]" #> ("%s/%d".format(baseUrl, a.id)))
 
     ".entry" #> bindArticle &
       ".previsious" #> prev &
@@ -101,7 +100,8 @@ trait ArticleSnippet[U <: Article] extends DispatchSnippet {
           ".text *" #> TextileParser.paraFixer(TextileParser.toHtml(a.text)) &
           ".date" #> timestamp.format(a.created) &
           ".author" #> a.author.headOption.map(_.name).getOrElse("unknown") &
-          ".id" #> a.id).getOrElse("*" #> "")
+          ".id" #> a.id &
+          ".link [href]" #> ("%s/%d".format(baseUrl, a.id))).getOrElse("*" #> "")
     }
   }
 
@@ -130,7 +130,7 @@ trait ArticleSnippet[U <: Article] extends DispatchSnippet {
     def bind = article.map(a =>
       ".title" #> a.title &
         ".date" #> timestamp.format(a.created) &
-        ".author" #> transaction{a.author.headOption.map(_.name).getOrElse("unknown")} &
+        ".author" #> transaction { a.author.headOption.map(_.name).getOrElse("unknown") } &
         ".id" #> a.id &
         ".editlink [href]" #> "%s/edit/%d".format(baseUrl, a.id) &
         ".deletelink [href]" #> "%s/delete/%d".format(baseUrl, a.id))
@@ -185,21 +185,21 @@ trait ArticleSnippet[U <: Article] extends DispatchSnippet {
 
     ".title" #> SHtml.text(article.title, article.title = _) &
       ".text" #> ajaxLiveTextarea(article.text, updatePreview) &
-      ".author" #> transaction{article.author.headOption.map(_.name).getOrElse("unknown")} &
+      ".author" #> transaction { article.author.headOption.map(_.name).getOrElse("unknown") } &
       ".submit" #> SHtml.submit(S ? "add", addNewsToDatabase) &
       "#previewarea *" #> preview
   }
 
   def delete = {
     val id = S.param("id").openOr("0").toLong
-    
-    val article = transaction{articles.lookup(id)}
+
+    val article = transaction { articles.lookup(id).headOption }
 
     if (article.isEmpty)
       S.redirectTo("/")
 
     def deleteArticleFormDatabase() = {
-      article.map(a => articles.deleteWhere(qa => qa.id === a.id))
+      transaction { article.map(a => articles.deleteWhere(qa => qa.id === a.id)) }
       S.redirectTo("%s/list".format(baseUrl))
     }
 
@@ -207,7 +207,7 @@ trait ArticleSnippet[U <: Article] extends DispatchSnippet {
       ".title" #> a.title &
         ".text" #> TextileParser.paraFixer(TextileParser.toHtml(a.text)) &
         ".date" #> timestamp.format(a.created) &
-        ".author" #> transaction{a.author.headOption.map(_.name).getOrElse("unknown")} &
+        ".author" #> transaction { a.author.headOption.map(_.name).getOrElse("unknown") } &
         ".id" #> a.id &
         ".submit" #> SHtml.submit(S ? "delete", deleteArticleFormDatabase)).getOrElse("*" #> (S ? "entry.not.found"))
   }
@@ -215,7 +215,7 @@ trait ArticleSnippet[U <: Article] extends DispatchSnippet {
   def edit = {
     val id = S.param("id").openOr("0").toLong
 
-    val article = transaction{articles.lookup(id)}
+    val article = transaction { articles.lookup(id) }
 
     if (article.isEmpty)
       S.redirectTo("/")
@@ -227,7 +227,7 @@ trait ArticleSnippet[U <: Article] extends DispatchSnippet {
         if (a.title.eq("") && a.text.eq(""))
           S.error(S.?("fill.title.and.text"))
         else {
-          transaction{articles.update(a)}
+          transaction { articles.update(a) }
           S.redirectTo(baseUrl)
         })
     }
@@ -242,7 +242,7 @@ trait ArticleSnippet[U <: Article] extends DispatchSnippet {
     article.map(a =>
       ".title" #> SHtml.text(a.title, a.title = _) &
         ".text" #> ajaxLiveTextarea(a.text, updatePreview) &
-        ".author" #> transaction{a.author.headOption.map(_.name).getOrElse("unknown")} &
+        ".author" #> transaction { a.author.headOption.map(_.name).getOrElse("unknown") } &
         ".submit" #> SHtml.submit(S ? "edit", updateArticleInDatabase) &
         "#previewarea *" #> preview).getOrElse("*" #> (S ? "entry.not.found"))
   }

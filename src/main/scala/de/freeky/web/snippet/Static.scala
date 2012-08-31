@@ -25,16 +25,19 @@ class Static extends DispatchSnippet {
   def show = {
     val site = S.attr("site") openOr ""
 
-    val contentBox = for {
-      staticSite <- transaction {
-        from(FreekyDB.staticPages)(sp => where(sp.name === site) select (sp)).headOption
-      }
-    } yield staticSite.content
-
-    contentBox match {
-      case Some(content) =>
-        "*" #> TextileParser.paraFixer(
-          TextileParser.toHtml(content))
+    transaction {
+      from(FreekyDB.staticPages)(sp => where(sp.name === site) select (sp)).headOption
+    } match {
+      case Some(site) =>
+        "*" #>
+          <div>
+            <head>
+              <title>{ site.title }</title>
+              <meta name="description" content={ site.description }/>
+              <meta name="keywords" content={ site.keywords }/>
+            </head>
+            { TextileParser.paraFixer(TextileParser.toHtml(site.content)) }
+          </div>
       case _ => {
         generatePages
         S.redirectTo("/")
@@ -74,7 +77,10 @@ class Static extends DispatchSnippet {
     dbPage match {
       case Some(page) =>
         ".name" #> Text(page.name) &
-          ".editcontent" #> ajaxLiveTextarea(page.content, updateShowContent _) &
+          ".editcontent" #> ajaxLiveTextarea(page.content, updateShowContent(_)) &
+          ".edittitle" #> SHtml.text(page.title, page.title = _) &
+          ".editdescription" #> SHtml.text(page.description, page.description = _) &
+          ".editkeywords" #> SHtml.text(page.keywords, page.keywords = _) &
           "#showcontent *" #> TextileParser.paraFixer(TextileParser.toHtml(page.content)) &
           ".submit" #> SHtml.submit(S ? "edit", processEdit)
       case _ => S.redirectTo("/administration/staticpage/list")
@@ -87,10 +93,10 @@ class Static extends DispatchSnippet {
 
   def generatePages() = {
     transaction {
-      FreekyDB.staticPages.insertOrUpdate(new StaticPage(1, "index", "", new Timestamp(millis)))
-      FreekyDB.staticPages.insertOrUpdate(new StaticPage(2, "about", "", new Timestamp(millis)))
-      FreekyDB.staticPages.insertOrUpdate(new StaticPage(3, "contact", "", new Timestamp(millis)))
-      FreekyDB.staticPages.insertOrUpdate(new StaticPage(4, "impressum", "", new Timestamp(millis)))
+      FreekyDB.staticPages.insertOrUpdate(new StaticPage(1, "index", "", new Timestamp(millis), "", "", ""))
+      FreekyDB.staticPages.insertOrUpdate(new StaticPage(2, "about", "", new Timestamp(millis), "", "", ""))
+      FreekyDB.staticPages.insertOrUpdate(new StaticPage(3, "contact", "", new Timestamp(millis), "", "", ""))
+      FreekyDB.staticPages.insertOrUpdate(new StaticPage(4, "impressum", "", new Timestamp(millis), "", "", ""))
     }
   }
 }

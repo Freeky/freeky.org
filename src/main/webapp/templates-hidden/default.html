@@ -2,10 +2,6 @@
 	xmlns:lift="http://liftweb.net/">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-<title><span class="lift:Menu.title">code:app:0.1-SNAPSHOT</span>
-</title>
 <link href="/css/screen.css" type="text/css" rel="stylesheet"
 	media="screen, projection" />
 <link href="/css/print.css" type="text/css" rel="stylesheet"
@@ -28,17 +24,17 @@
 				</lift:UserAction.login>
 				<lift:UserAction.status form="POST">
 			Logged in as: <status:username />
-			<lift:Menu.item name="options"/>
+					<lift:Menu.item name="options" />
 					<status:logout />
 				</lift:UserAction.status>
 			</div>
 		</div>
 		<div>
-			<div class="column span-5 sidebar containerbox">
+			<div class="column sidebar containerbox">
 				<div class="lift:Menu.builder?linkToSelf=true&expandAll=true;"></div>
 			</div>
-			<div class="column last contentbox containerbox">
-				<div class = "lift:msgs">
+			<div class="column contentbox containerbox">
+				<div class="lift:msgs">
 					<lift:error_msg>Error:</lift:error_msg>
 					<lift:error_class>errorBox</lift:error_class>
 					<lift:warning_msg>Warning:</lift:warning_msg>
@@ -48,9 +44,24 @@
 				</div>
 				<lift:bind name="content" />
 			</div>
+			<div class="column sidebar containerbox">
+				<script type="text/javascript">
+				<!--
+					google_ad_client = "ca-pub-6239570125861265";
+					/* f right */
+					google_ad_slot = "1224946359";
+					google_ad_width = 160;
+					google_ad_height = 600;
+				//-->
+				</script>
+				<script type="text/javascript"
+					src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+					
+				</script>
+			</div>
 			<br />
-			<div class="column span-23 last footer">freeky.org is Copyright
-				2011-2012 by Freeky</div>
+			<div class="column span-23 last footer">Copyright © 2012 -
+				Freeky</div>
 		</div>
 	</div>
 </body>

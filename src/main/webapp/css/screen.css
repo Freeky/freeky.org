@@ -18,12 +18,12 @@ table {border-collapse:separate;border-spacing:0;}
 caption, th, td {text-align:left;font-weight:normal;}
 table, td, th {vertical-align:middle;}
 blockquote:before, blockquote:after, q:before, q:after {content:"";}
-blockquote, q {quotes:"" "";}
+blockquote, q {quotes:"" ""; }
 a img {border:none;}
 
 /* typography.css */
 body {font-size:75%;color:#fff;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;letter-spacing: 1px;}
-h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#fff;}
+h1, h2, h3, h4, h5, h6 {font-weight:normal;}
 h1 {font-size:2em;margin-bottom:0.5em;}
 h2 {font-size:1.5em;line-height:1;margin-bottom:0.25em;}
 h3 {font-size:1.2em;line-height:1.25;margin-bottom:1.25em;}
@@ -35,7 +35,7 @@ p img.left {float:left;margin:1.5em 1.5em 1.5em 0;padding:0;}
 p img.right {float:right;margin:1.5em 0 1.5em 1.5em;}
 a:focus, a:hover {color:#EDFF99;}
 a {color:#EDFF22;text-decoration:underline;}
-blockquote {margin:1.5em;color:#666;font-style:italic;}
+blockquote {padding: 1em; margin:0.5em; margin-bottom: 1.5em; color:#bbb;font-style:italic; background-color: #333; border: 1px black dashed;}
 strong {font-weight:bold;}
 em, dfn {font-style:italic;}
 dfn {font-weight:bold;}
@@ -266,7 +266,7 @@ input.text, input.title {width:300px;padding:5px;}
 input.title {font-size:1.5em;}
 input[type=submit], button {border: 1px solid #222;background-color: #EDDD22;box-shadow: 1px 1px 2px black;}
 input[type=submit]:hover, button:hover {background-color: #EDEE66}
-textarea {width:390px;height:250px;padding:5px;}
+textarea {width:535px;height:400px;padding:5px;}
 .error, .notice, .success {padding:.8em;margin-bottom:1em;border:2px solid #ddd;}
 .error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
 .notice {background:#FFF6BF;color:#514721;border-color:#FFD324;}
@@ -287,9 +287,10 @@ textarea {width:390px;height:250px;padding:5px;}
 .sidebar ul li a:hover {background-color: #333;}
 
 body {background-image: url('/images/bg.jpg');background-attachment: fixed;background-position: center top;background-size: cover;}
-.containerbox {background-color: rgb(60,60,60); background-color: rgba(60,60,60,1); border: 2px solid rgb(0,0,0); border-radius: 5px; padding: 5px; box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8); margin: 5px 0px;}
+.containerbox {background-color: rgb(60,60,60); background-color: rgba(60,60,60,1); border: 2px solid rgb(0,0,0); border-radius: 5px; padding: 5px; box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8); margin: 5px 10px 5px 0px;}
+.sidebar {width: 160px;}
 .headerbox {height: 50px;}
-.contentbox {width: 702px;padding: 15px}
+.contentbox {width: 539px;padding: 15px;}
 .menuItem {padding: 5px; float: left;}
 .selectedItem {}
 .headerform {float: right;margin-top: 25px}

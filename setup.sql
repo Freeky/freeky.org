@@ -18,6 +18,7 @@ create table AccountType (
     rEditBlog boolean not null,
     id bigint primary key not null auto_increment,
     rAdministrateUsers boolean not null,
+    rManageImages boolean not null,
     rEditStaticPages boolean not null,
     rEditProjects boolean not null,
     rSendMail boolean not null
@@ -43,8 +44,11 @@ create table Project (
 create table StaticPage (
     name varchar(64) not null,
     lastModified datetime not null,
+    description varchar(256) not null,
     id bigint primary key not null auto_increment,
-    content text not null
+    content text not null,
+    keywords varchar(512) not null,
+    title varchar(128) not null
   );
 -- indexes on StaticPage
 create unique index idx2e0405b4 on StaticPage (name);
@@ -56,7 +60,18 @@ create table Blog (
     title varchar(256) not null,
     created datetime not null
   );
+create table Image (
+    name varchar(256) not null,
+    mimeType varchar(64) not null,
+    id bigint primary key not null auto_increment,
+    uploaded datetime not null,
+    uploaderId bigint not null,
+    secure varchar(16) not null
+  );
+-- indexes on Image
+create unique index idx1cd20498 on Image (secure);
 -- foreign key constraints :
 alter table User add constraint UserFK1 foreign key (accounttypeId) references AccountType(id);
 alter table LoginAttempt add constraint LoginAttemptFK2 foreign key (userId) references User(id);
 alter table Blog add constraint BlogFK3 foreign key (authorId) references User(id);
+alter table Image add constraint ImageFK4 foreign key (uploaderId) references User(id);

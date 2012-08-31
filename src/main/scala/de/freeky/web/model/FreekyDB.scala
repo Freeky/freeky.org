@@ -11,6 +11,7 @@ object FreekyDB extends Schema {
   val projects = table[Project]
   val staticPages = table[StaticPage]
   val blogs = table[Blog]
+  val images = table[Image]
 
   val accountTypeToUser =
     oneToManyRelation(accountTypes, users).via((a, u) => a.id === u.accounttypeId)
@@ -20,6 +21,9 @@ object FreekyDB extends Schema {
 
   val userToBlogs =
     oneToManyRelation(users, blogs).via((u, b) => u.id === b.authorId)
+    
+  val userToImages =
+    oneToManyRelation(users, images).via((u,i) => u.id === i.uploaderId)
 
   on(users)(u => declare(
     u.name is (unique, indexed, dbType("varchar(20)")),
@@ -42,15 +46,17 @@ object FreekyDB extends Schema {
 
   on(staticPages)(sp => declare(
     sp.name is (unique, indexed, dbType("varchar(64)")),
-    sp.content is (dbType("text"))))
+    sp.content is (dbType("text")),
+    sp.description is (dbType("varchar(256)")),
+    sp.keywords is (dbType("varchar(512)")),
+    sp.title is (dbType("varchar(128)"))))
 
   on(blogs)(b => declare(
     b.title is (dbType("varchar(256)")),
     b.text is (dbType("text"))))
+
+  on(images)(i => declare(
+    i.name is (dbType("varchar(256)")),
+    i.secure is (unique, indexed, dbType("varchar(16)")),
+    i.mimeType is (dbType("varchar(64)"))))
 }
-
-
-
-
-
-
