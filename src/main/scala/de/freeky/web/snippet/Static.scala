@@ -95,7 +95,7 @@ class Static extends DispatchSnippet {
     transaction {
       FreekyDB.staticPages.insertOrUpdate(new StaticPage(1, "index", "", new Timestamp(millis), "", "", ""))
       FreekyDB.staticPages.insertOrUpdate(new StaticPage(2, "about", "", new Timestamp(millis), "", "", ""))
-      FreekyDB.staticPages.insertOrUpdate(new StaticPage(3, "contact", "", new Timestamp(millis), "", "", ""))
+      //FreekyDB.staticPages.insertOrUpdate(new StaticPage(3, "contact", "", new Timestamp(millis), "", "", ""))
       FreekyDB.staticPages.insertOrUpdate(new StaticPage(4, "impressum", "", new Timestamp(millis), "", "", ""))
     }
   }

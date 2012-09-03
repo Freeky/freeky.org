@@ -27,6 +27,10 @@ import java.net.URL
  */
 class Boot {
   def boot {
+    
+    // Turn on StripComments for Google Adsense
+    LiftRules.stripComments.default.set(false)
+    LiftRules.htmlProperties.default.set((r: Req) => new Html5Properties(r.userAgent))
      // where to search snippet
     LiftRules.addToPackages("de.freeky.web")
 
@@ -55,8 +59,8 @@ class Boot {
       Menu("changemail", S ? "change.mail") / "options" / "changemail" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
       Menu("changepassword", S ? "change.password") / "options" / "changepassword" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
       Menu("deleteaccount", S ? "delete.account") / "options" / "deleteaccount" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
-      Menu(S ? "impressum") / "impressum" >> Hidden,
-      Menu(S ? "contact") / "contact" >> Hidden,
+      Menu("impressum", S ? "impressum") / "impressum" >> Hidden,
+      //Menu("contact" S ? "contact") / "contact" >> Hidden,
       Menu("") / "css" / ** >> Hidden,
       Menu("") / "images" / ** >> Hidden,
       Menu("") / "js" / ** >> Hidden,
@@ -114,16 +118,20 @@ class Boot {
     SquerylRecord.initWithSquerylSession(Session.create(
       connectionPool.getConnection(),
       new MySQLAdapter))
+    
+    if(Props.devMode) setupSQL
 
-    // SQL zum erzeugen der Tabellen schreiben
+    setupMailer
+  }
+  
+  // SQL zum erzeugen der Tabellen schreiben
+  def setupSQL = {
     transaction {
       val sqlPrinter = new PrintWriter(new FileOutputStream("setup.sql"))
       FreekyDB.printDdl(sqlPrinter)
       sqlPrinter.flush()
       sqlPrinter.close()
     }
-
-    setupMailer
   }
 
   def setupMailer = {

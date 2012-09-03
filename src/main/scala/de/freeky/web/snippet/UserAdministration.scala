@@ -37,15 +37,16 @@ class UserAdministration extends StatefulSnippet {
     var entrycount = 25
     var page = 0
 
+    val userEntryTemplate = (".entry ^^" #> (n => n)).apply(in)
+    
     def buildUserTable(entries: List[User], template: NodeSeq) = {
       entries.flatMap({ entry =>
-        bind("entry", chooseTemplate("overview", "entry", template),
-          "id" -> Text(entry.id.toString),
-          "name" -> Text(entry.name),
-          "type" -> Text(entry.accountType.head.name),
-          "editlink" -> { nodes: NodeSeq =>
+          (".id" #> Text(entry.id.toString) &
+          ".name" #> Text(entry.name) &
+          ".type" #> Text(entry.accountType.head.name) &
+          ".editlink" #> { nodes: NodeSeq =>
             <a href={ "/administration/users/" + entry.id.toString }>{ nodes }</a>
-          })
+          }).apply(userEntryTemplate)
       })
     }
 
@@ -84,16 +85,15 @@ class UserAdministration extends StatefulSnippet {
       updateUserTable
     }
 
-    bind("overview", in,
-      "entrycount" -> SHtml.ajaxSelect(List(10, 25, 50, 100).map(i => (i.toString, i.toString)),
-        Full(25.toString), v => updateEntryCount(v)),
-      "page" -> Text((page + 1).toString),
-      "prevpage" -> SHtml.ajaxButton(Text(S ? "previous"), () => prevPage),
-      "nextpage" -> SHtml.ajaxButton(Text(S ? "next"), () => nextPage),
-      "table" -> userTable)
+    (".entrycount" #> SHtml.ajaxSelect(List(10, 25, 50, 100).map(i => (i.toString, i.toString)),
+        Full(25.toString), v => updateEntryCount(v)) &
+      "#current_page" #> Text((page + 1).toString) &
+      ".prevpage" #> SHtml.ajaxButton(Text(S ? "previous"), () => prevPage) &
+      ".nextpage" #> SHtml.ajaxButton(Text(S ? "next"), () => nextPage) &
+      "#user_table" #> userTable).apply(in)
   }
 
-  def editUser(in: NodeSeq): NodeSeq = {
+  def editUser = {
     var password = ""
     var passwordretype = ""
     var accountType = ""
@@ -144,16 +144,15 @@ class UserAdministration extends StatefulSnippet {
 
     userOption match {
       case Some(user) => {
-        bind("user", in,
-          "name" -> SHtml.text(user.name, user.name = _),
-          "password" -> SHtml.password(password, password = _),
-          "passwordretype" -> SHtml.password(passwordretype, passwordretype = _),
-          "email" -> SHtml.text(user.email, user.email = _),
-          "registrationdate" -> Text(user.registrationdate.toString()),
-          "accounttype" -> SHtml.select(buildAccountTypeValues, Full(user.accounttypeId.toString), accountType = _),
-          "submit" -> SHtml.submit(S ? "edit", processEditUser))
+          ".name" #> SHtml.text(user.name, user.name = _) &
+          ".password" #> SHtml.password(password, password = _) &
+          ".passwordretype" #> SHtml.password(passwordretype, passwordretype = _) &
+          ".email" #> SHtml.text(user.email, user.email = _) &
+          ".registrationdate" #> Text(user.registrationdate.toString()) &
+          ".accounttype" #> SHtml.select(buildAccountTypeValues, Full(user.accounttypeId.toString), accountType = _) &
+          ".submit" #> SHtml.submit(S ? "edit", processEditUser)
       }
-      case _ => Text("")
+      case _ => "*" #> ""
     }
   }
 }

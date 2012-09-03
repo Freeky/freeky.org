@@ -281,16 +281,17 @@ textarea {width:535px;height:400px;padding:5px;}
 .lift_warning {color:yellow;}
 .lift_notice {}
 .sidebar ul {margin:13px;padding:0;}
-.sidebar ul li {margin:0;padding:0;list-style:none;}
+.sidebar ul li {margin:0px;padding:0px;list-style:none;}
 .sidebar ul li a {display:block;padding:3px;text-decoration:none;}
 .sidebar ul li span {display:block;padding:3px;text-decoration:none;}
 .sidebar ul li a:hover {background-color: #333;}
+.sidebar ul li ul {margin:0px;border-left:3px solid black;}
 
 body {background-image: url('/images/bg.jpg');background-attachment: fixed;background-position: center top;background-size: cover;}
 .containerbox {background-color: rgb(60,60,60); background-color: rgba(60,60,60,1); border: 2px solid rgb(0,0,0); border-radius: 5px; padding: 5px; box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8); margin: 5px 10px 5px 0px;}
 .sidebar {width: 160px;}
 .headerbox {height: 50px;}
-.contentbox {width: 539px;padding: 15px;}
+.contentbox {width: 538px;padding: 15px;}
 .menuItem {padding: 5px; float: left;}
 .selectedItem {}
 .headerform {float: right;margin-top: 25px}

@@ -7,70 +7,61 @@
 <body class="lift:content_id=main">
 	<div id="main" class="lift:surround?with=default;at=content">
 		<h2>Advanced: User Administration</h2>
-		<div>
-			<lift:UserAdministration.edituser form="POST">
-				<table>
+		<form class="lift:UserAdministration.edituser?form=POST">
+			<table>
+				<tr>
+					<td>Name:</td>
+					<td><span class="name">name</span></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><span class="password">password</span></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><span class="passwordretype">passwordretype</span></td>
+				</tr>
+				<tr>
+					<td>Email:</td>
+					<td><span class="email">email</span></td>
+				</tr>
+				<tr>
+					<td>Registration date:</td>
+					<td><span class="registrationdate">registrationdate</span></td>
+				</tr>
+				<tr>
+					<td>Account type:</td>
+					<td><span class="accounttype">accounttype</span></td>
+				</tr>
+			</table>
+			<button type="submit" class="submit">submit</button>
+		</form>
+		<br />
+		<hr />
+		
+		<div class=lift:UserAdministration.overview>
+			<span class="entrycount">entrycount</span>
+			<span class="prevpage">prevpage</span>
+			<span id="current_page">current_page</span>
+			<span class="nextpage">nextpage</span>
+			<table>
+				<thead>
 					<tr>
-						<td>Name:</td>
-						<td><user:name /></td>
+						<td>id</td>
+						<td>name</td>
+						<td>Type</td>
+						<td>edit link</td>
 					</tr>
-					<tr>
-						<td>Password:</td>
-						<td><user:password /></td>
+				</thead>
+				<tbody id="user_table">
+					<tr class="entry">
+						<td><span class="id">id</span></td>
+						<td><span class="name">name</span></td>
+						<td><span class="type">type</span></td>
+						<td><span class="editlink">edit</span></td>
 					</tr>
-					<tr>
-						<td></td>
-						<td><user:passwordretype /></td>
-					</tr>
-					<tr>
-						<td>Email:</td>
-						<td><user:email /></td>
-					</tr>
-					<tr>
-						<td>Registration date:</td>
-						<td><user:registrationdate /></td>
-					</tr>
-					<tr>
-						<td>Account type:</td>
-						<td><user:accounttype /></td>
-					</tr>
-				</table>
-				<user:submit />
-			</lift:UserAdministration.edituser>
-		</div>
-		<div>
-			<lift:UserAdministration.overview>
-				<overview:entrycount />
-				<overview:prevpage />
-				<span id="current_page"><overview:page /> </span>
-				<overview:nextpage />
-				<table>
-					<thead>
-						<tr>
-							<td>id</td>
-							<td>name</td>
-							<td>Type</td>
-							<td>edit link</td>
-						</tr>
-					</thead>
-					<tbody id="user_table">
-						<overview:table>
-							<overview:entry>
-								<tr>
-									<td><entry:id />
-									</td>
-									<td><entry:name />
-									</td>
-									<td><entry:type />
-									</td>
-									<td><entry:editlink>edit</entry:editlink>
-									</td>
-								</tr>
-							</overview:entry>
-						</overview:table>
-					</tbody>
-				</table>
-			</lift:UserAdministration.overview>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </body>

@@ -117,7 +117,7 @@ class UserAction extends StatefulSnippet with Logger {
     errors
   }
 
-  def login(in: NodeSeq): NodeSeq = {
+  def login = {
 
     def processLogin(): Unit = {
       transaction {
@@ -172,12 +172,11 @@ class UserAction extends StatefulSnippet with Logger {
     }
 
     loggedInUser.is match {
-      case Full(user) => Text("")
+      case Full(user) => "*" #> ""
       case _ => {
-        bind("login", in,
-          "email" -> SHtml.text(email, email = _),
-          "password" -> SHtml.password("", password = _),
-          "submit" -> SHtml.submit(S ? "login", processLogin))
+          ".email" #> SHtml.text(email, email = _) &
+          ".password" #> SHtml.password("", password = _) &
+          ".submit" #> SHtml.submit(S ? "login", processLogin)
       }
     }
   }
@@ -193,12 +192,12 @@ class UserAction extends StatefulSnippet with Logger {
     }
   }
 
-  def status(in: NodeSeq): NodeSeq = {
+  def status = {
     loggedInUser.is match {
-      case Full(user) => bind("status", in,
-        "username" -> Text(user.name),
-        "logout" -> SHtml.submit(S ? "logout", processLogout))
-      case _ => Text("")
+      case Full(user) => 
+        ".username" #> user.name &
+        ".logout" #> SHtml.submit(S ? "logout", processLogout)
+      case _ => "*" #> ""
     }
   }
 

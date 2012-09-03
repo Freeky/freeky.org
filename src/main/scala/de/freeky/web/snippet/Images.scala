@@ -165,7 +165,7 @@ object Images extends Logger {
   def serveImage(secure: String, name: String): Box[LiftResponse] = {
 
     transaction {
-      FreekyDB.images.where(i => i.secure like secure).headOption.map(image => {
+      FreekyDB.images.where(i => (i.secure like secure) and (i.name like name)).headOption.map(image => {
         if (!image.file.canRead()) 
           error("file: %s could not be read" format (image.file.getAbsoluteFile()))
         val originalImage = ImageIO.read(image.file)
