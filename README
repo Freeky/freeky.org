@@ -2,3 +2,7 @@ Dump the database with following mysqldump command:
 mysqldump -t -c --user=<user> --password=<pass> <database> > dump.sql
 Run the setup.sql and then the dump.sql to get new Database
 -> makes database evolution extremely easy
+
+TODO:
+- head merge adjustments
+- improve blog markup

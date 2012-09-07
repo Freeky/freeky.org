@@ -7,10 +7,10 @@
 <body class="lift:content_id=main">
 	<div id="main" class="lift:surround?with=default;at=content">
 		<h2>Change mail</h2>
-			<lift:UserAction.changemail form="POST">
-				New mail address: <changemail:email /> <br />
-				<changemail:submit />
-			</lift:UserAction.changemail>
+			<form class="lift:UserAction.changemail?form=POST">
+				New mail address: <span class="email">email</span><br />
+				<span class="submit">submit</span>
+			</form>
 	</div>
 </body>
 </html>

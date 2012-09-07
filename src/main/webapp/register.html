@@ -6,13 +6,13 @@
 </head>
 <body class="lift:content_id=main">
 	<div id="main" class="lift:surround?with=default;at=content">
-		<lift:UserAction.register form="POST">
-			Username: <register:name /><br />
-			Email: <register:email /><br />
-			Password: <register:password /><br />
-			Repeat password: <register:passwordretype /><br />
-			<register:submit />			
-		</lift:UserAction.register>
+		<form class="lift:UserAction.register?form=POST">
+			Username: <span class="name">name</span><br />
+			Email: <span class="email">email</span><br />
+			Password: <span class="password">password</span><br />
+			Repeat password: <span class="passwordretype">passwordretype</span><br />
+			<span class="submit">submit</span>		
+		</form>
 	</div>
 </body>
 </html>

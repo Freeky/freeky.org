@@ -16,6 +16,7 @@ abstract class Article() extends KeyedEntity[Long] {
     var authorId: Long
     val created: Timestamp
     var modified: Timestamp 
+    var published: Option[Timestamp]
 
     val author: ManyToOne[User] 
 	

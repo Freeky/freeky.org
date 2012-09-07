@@ -13,19 +13,18 @@ class Options extends DispatchSnippet with Logger {
     case "show" => show
   }
 
-  def show(in: NodeSeq): NodeSeq = {
+  def show = {
     loggedInUser.is match {
       case Full(user) => {
-        bind("show", in,
-          "registrationdate" -> Text(user.registrationdate.toString()),
-          "mail" -> Text(user.email),
-          "changemail" -> <lift:Menu.item name="changemail"/>,
-          "changepassword" -> <lift:Menu.item name="changepassword"/>,
-          "deleteaccount" -> <lift:Menu.item name="deleteaccount"/>)
+          ".registrationdate" #> Text(user.registrationdate.toString()) &
+          ".mail" #> Text(user.email) &
+          ".changemail" #> <lift:Menu.item name="changemail"/> &
+          ".changepassword" #> <lift:Menu.item name="changepassword"/> &
+          ".deleteaccount" #> <lift:Menu.item name="deleteaccount"/>
       }
       case _ => {
         warn("show-snippet was invoked but no user was set")
-        Text("There was an error")
+        "*" #> "There was an error"
       }
     }
   }

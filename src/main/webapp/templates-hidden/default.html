@@ -1,4 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:lift="http://liftweb.net/">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:lift="http://liftweb.net/">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"></meta>
 <link href="/css/screen.css" type="text/css" rel="stylesheet"
@@ -17,13 +18,13 @@
 			</div>
 			<div class="headerform">
 				<form class="lift:UserAction.login?form=POST">
-			Email: <input type="text" class="email"></input>
-			Password: <input type="password" class="password"></input>
+					Email: <input type="text" class="email"></input> Password: <input
+						type="password" class="password"></input>
 					<button type="submit" class="submit">submit</button>
 				</form>
 				<form class="lift:UserAction.status?form=POST">
-			Logged in as: <span class="username">username</span>
-					<span class="lift:Menu.item?name=options">Options</span>
+					Logged in as: <span class="username">username</span> <span
+						class="lift:Menu.item?name=options">Options</span>
 					<button type="submit" class="logout">logoutbtn</button>
 				</form>
 			</div>
@@ -41,27 +42,38 @@
 					<lift:notice_msg>Note:</lift:notice_msg>
 					<lift:notice_class>noticeBox</lift:notice_class>
 				</div>
-				<lift:bind name="content"/>
+				<lift:bind name="content" />
 			</div>
 			<div class="column sidebar containerbox">
-				<script type="text/javascript">
-				<!--
-					google_ad_client = "ca-pub-6239570125861265";
-					/* fky right */
-					google_ad_slot = "8891878907";
-					google_ad_width = 160;
-					google_ad_height = 600;
-				//-->
-				</script>
-				<script type="text/javascript"
-					src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-					
-				</script>
+				<center>
+					<b>Weather in Munich</b>
+				</center>
+				<!-- wetter.com button 160x175-->
+				<div id="wettercom-button-542c4a8f7cb3621c7240aa179a4b502e">
+					<link id="wettercom-css"
+						href="http://www.wetter.com/css/woys3c.css?20518,542c4a8f7cb3621c7240aa179a4b502e"
+						rel="stylesheet" type="text/css" />
+					<div id="wettercom-woys-542c4a8f7cb3621c7240aa179a4b502e"></div>
+					<div id="cityTitle">
+						<a
+							href="http://www.wetter.com/wetter_aktuell/wettervorhersage/3_tagesvorhersage/?id=DE0006515"
+							target="_blank">Weather M&uuml;nchen</a>
+					</div>
+					<div id="logo">
+						<a href="http://www.wetter.com" target="_blank"><img
+							id="wettercom-logo"
+							src="http://www.wetter.com/img/websitetools/woys/logo.png"
+							alt="wetter.com" title="wetter.com" /></a>
+					</div>
+					<script type="text/javascript"
+						src="http://www.wetter.com/js/woys3c.js?20518,542c4a8f7cb3621c7240aa179a4b502e"></script>
+				</div>
+				<!-- wetter.com button 160x175-->
 			</div>
-			<br><br />
+			<br> <br />
 			<div class="column span-23 last footer">
-				Copyright © 2012 - Freeky<br />
-				<span class="lift:Menu.item?linktToSelf=true&name=impressum;">Impressum</span>
+				Copyright © 2012 - Freeky<br /> <span
+					class="lift:Menu.item?linktToSelf=true&name=impressum;">Impressum</span>
 			</div>
 		</div>
 	</div>

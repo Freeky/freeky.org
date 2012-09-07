@@ -28,7 +28,7 @@ class UserAction extends StatefulSnippet with Logger {
   var password = ""
   var passwordretype = ""
 
-  def register(in: NodeSeq): NodeSeq = {
+  def register = {
 
     def processRegister(): Unit = {
       var errors = checkRegistrationInformations
@@ -62,13 +62,12 @@ class UserAction extends StatefulSnippet with Logger {
     }
 
     loggedInUser.is match {
-      case Full(user) => Text("")
-      case _ => bind("register", in,
-        "name" -> SHtml.text(username, username = _),
-        "email" -> SHtml.text(email, email = _),
-        "password" -> SHtml.password("", password = _),
-        "passwordretype" -> SHtml.password("", passwordretype = _),
-        "submit" -> SHtml.submit(S ? "sign.up", processRegister))
+      case Full(user) => "*" #> ""
+      case _ => {".name" #> SHtml.text(username, username = _) &
+        ".email" #> SHtml.text(email, email = _) &
+        ".password" #> SHtml.password("", password = _) &
+        ".passwordretype" #> SHtml.password("", passwordretype = _) &
+        ".submit" #> SHtml.submit(S ? "sign.up", processRegister)}
     }
   }
 
@@ -201,7 +200,7 @@ class UserAction extends StatefulSnippet with Logger {
     }
   }
 
-  def changePassword(in: NodeSeq): NodeSeq = {
+  def changePassword = {
     var currentPassword = ""
     var newPassword = ""
     var repeatNewPassword = ""
@@ -233,20 +232,19 @@ class UserAction extends StatefulSnippet with Logger {
     }
     loggedInUser.is match {
       case Full(user) => {
-        bind("changepassword", in,
-          "currentpassword" -> SHtml.password(currentPassword, currentPassword = _),
-          "newpassword" -> SHtml.password(newPassword, newPassword = _),
-          "newpasswordretype" -> SHtml.password(repeatNewPassword, repeatNewPassword = _),
-          "submit" -> SHtml.submit(S ? "change", () => processChangePassword))
+          ".currentpassword" #> SHtml.password(currentPassword, currentPassword = _) &
+          ".newpassword" #> SHtml.password(newPassword, newPassword = _) &
+          ".newpasswordretype" #> SHtml.password(repeatNewPassword, repeatNewPassword = _) &
+          ".submit" #> SHtml.submit(S ? "change", () => processChangePassword)
       }
       case _ => {
         warn("changePassword-snippet was invoked but no user was set")
-        Text("There was an error")
+        "*" #> "There was an error"
       }
     }
   }
 
-  def changeEmail(in: NodeSeq): NodeSeq = {
+  def changeEmail = {
     def processChangeEmail = {
       loggedInUser.is match {
         case Full(user) => {
@@ -264,13 +262,12 @@ class UserAction extends StatefulSnippet with Logger {
 
     loggedInUser.is match {
       case Full(user) => {
-        bind("changemail", in,
-          "email" -> SHtml.text(email, email = _),
-          "submit" -> SHtml.submit(S ? "change", () => processChangeEmail))
+          ".email" #> SHtml.text(email, email = _) &
+          ".submit" #> SHtml.submit(S ? "change", () => processChangeEmail)
       }
       case _ => {
         warn("changeEmail-snippet was invoked but no user was set")
-        Text("There was an error")
+        "*" #> "There was an error"
       }
     }
   }

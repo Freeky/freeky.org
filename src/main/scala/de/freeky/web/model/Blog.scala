@@ -12,9 +12,10 @@ class Blog(val id: Long,
     var text: String,
     var authorId: Long,
     val created: Timestamp,
-    var modified: Timestamp) extends Article {
+    var modified: Timestamp,
+    var published: Option[Timestamp]) extends Article {
   
-  def this() = this(0L, "", "", 0L, new Timestamp(millis), new Timestamp(millis))
+  def this() = this(0L, "", "", 0L, new Timestamp(millis), new Timestamp(millis), Some(new Timestamp(millis)))
   
   lazy val author: ManyToOne[User] = FreekyDB.userToBlogs.right(this)
 

@@ -53,6 +53,7 @@ create table StaticPage (
 -- indexes on StaticPage
 create unique index idx2e0405b4 on StaticPage (name);
 create table Blog (
+    published datetime,
     text text not null,
     modified datetime not null,
     id bigint primary key not null auto_increment,
