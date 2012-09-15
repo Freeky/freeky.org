@@ -29,6 +29,7 @@ class Image(val id: Long,
     val file = new File(path, id.toString)
     file
   }
+  
   def toHTML(width: Int, height: Int): Node =
     <img src={ "/image/%s/%s?width=%d&height=%d".format(secure, name, width, height) }>{ name }</img>
 
