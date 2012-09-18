@@ -54,12 +54,14 @@ trait ArticleSnippet[U <: Article] extends DispatchSnippet {
     val id = S.param("id").openOr("0").toLong
     val page = S.param("page").openOr("1").toInt
     val pagesize = S.attr("pagesize").openOr("5").toInt
-    val entries = transaction { articles.where(a => a.published <= Some(new Timestamp(millis))).Count.toLong }
+    val entries = transaction {
+      articles.where(a => a.published <= Some(new Timestamp(millis))).Count.toLong
+    }
 
     var article: List[U] =
       transaction {
         if (id > 0) {
-          articles.lookup(id).toList
+          articles.lookup(id).toList.filter(_.published.isDefined)
         } else {
           from(articles)(a => where(a.published <= Some(new Timestamp(millis))) select (a) orderBy (a.created desc)).page((page - 1) * pagesize, pagesize).toList
         }
@@ -95,13 +97,14 @@ trait ArticleSnippet[U <: Article] extends DispatchSnippet {
 
   def showLatest = {
     transaction {
-      articles.where(a => a.published <= Some(new Timestamp(millis))).lastOption.map(a =>
-        ".title *" #> a.title &
-          ".text *" #> TextileParser.paraFixer(TextileParser.toHtml(a.text)) &
-          ".date" #> timestamp.format(a.published.getOrElse(now)) &
-          ".author" #> a.author.headOption.map(_.name).getOrElse("unknown") &
-          ".id" #> a.id &
-          ".link [href]" #> ("%s/%d".format(baseUrl, a.id))).getOrElse("*" #> "")
+      articles.where(a => a.published <= Some(new Timestamp(millis)))
+        .lastOption.map(a =>
+          ".title *" #> a.title &
+            ".text *" #> TextileParser.paraFixer(TextileParser.toHtml(a.text)) &
+            ".date" #> timestamp.format(a.published.getOrElse(now)) &
+            ".author" #> a.author.headOption.map(_.name).getOrElse("unknown") &
+            ".id" #> a.id &
+            ".link [href]" #> ("%s/%d".format(baseUrl, a.id))).getOrElse("*" #> "")
     }
   }
 

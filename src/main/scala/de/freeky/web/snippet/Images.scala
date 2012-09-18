@@ -37,7 +37,6 @@ class Images extends DispatchSnippet with Logger {
 
   def upload = {
 
-    var fileBox: Box[FileParamHolder] = Empty
     val currentUser = loggedInUser.map(_.id).openOr(0L)
 
     def processUpload() = {
@@ -60,7 +59,7 @@ class Images extends DispatchSnippet with Logger {
 
     }
 
-    ".fileupload" #> SHtml.fileUpload(x => fileBox = Full(x)) &
+    ".fileupload" #> SHtml.fileUpload(x => ()) &
       ".submit" #> SHtml.submit(S ? "upload", processUpload)
   }
 

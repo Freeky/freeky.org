@@ -10,6 +10,7 @@ import de.freeky.web.model._
 import S._
 import java.text.SimpleDateFormat
 import org.squeryl.PrimitiveTypeMode._
+import java.sql.Timestamp
 
 
 
@@ -22,7 +23,7 @@ class MySitemapContent {
   
   lazy val entries: Iterable[Entry] = static ++ blogs
   lazy val static: Iterable[Entry] = transaction{from(FreekyDB.staticPages)(sp => select(sp)).map(page => Entry(page.lastModified, "/%s".format(page.name)))}
-  lazy val blogs: Iterable[Entry] = transaction{from(FreekyDB.blogs)(b => select(b)).map(blog => Entry(blog.modified, "/blog/%s".format(blog.id)))}
+  lazy val blogs: Iterable[Entry] = transaction{from(FreekyDB.blogs)(b => where(b.published.isNotNull) select(b)).map(blog => Entry(blog.modified, "/blog/%s".format(blog.id)))}
   //lazy val news = Entry(News.findAll(OrderBy(News.editDate, Descending)).head.editDate.is, "/news")
   //lazy val pictures = Entry(Image.findAll(OrderBy(Image.uploadDate, Descending)).head.uploadDate.is, "/pictures")
   
