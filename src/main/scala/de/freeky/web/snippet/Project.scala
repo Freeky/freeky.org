@@ -3,7 +3,7 @@ package de.freeky.web.snippet
 import net.liftweb.common._
 import net.liftweb.http._
 import net.liftweb.util._
-import net.liftweb.textile._
+import net.liftmodules.textile._
 import scala.xml._
 import Helpers._
 import org.squeryl.PrimitiveTypeMode._
@@ -35,12 +35,12 @@ class Project extends DispatchSnippet with Logger {
           <div>
             <h1>Projects</h1>
             {
-              from(FreekyDB.projects)(p => select(p)).map(project => {
+              inTransaction {from(FreekyDB.projects)(p => select(p)).map(project => {
                 <div>
                   <h2><a href={ "/projects/%s".format(project.name) }>{ project.name }</a></h2>
                   <span>{ project.description }</span><br/><hr/>
                 </div>
-              })
+              })}
             }
           </div>
         }
@@ -93,9 +93,9 @@ class Project extends DispatchSnippet with Logger {
         case _ => {
           "*" #> <div>
             {
-              from(FreekyDB.projects)(p => select(p)).map(project => {
+              inTransaction { from(FreekyDB.projects)(p => select(p)).map(project => {
                 <a href={ "/edit/project/%d".format(project.id) }>{ project.name }</a><br/>
-              })
+              })}
             }
           </div>
         }

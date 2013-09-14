@@ -2,7 +2,6 @@ package de.freeky.web.snippet
 
 import net.liftweb.http._
 import net.liftweb.util._
-import net.liftweb.proto._
 import scala.xml._
 import Helpers._
 import org.squeryl.PrimitiveTypeMode._

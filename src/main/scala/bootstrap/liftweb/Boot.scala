@@ -8,7 +8,6 @@ import common._
 import http._
 import sitemap._
 import Loc._
-import squerylrecord.SquerylRecord
 import org.squeryl.Session
 import org.squeryl.adapters.MySQLAdapter
 import org.squeryl.PrimitiveTypeMode._
@@ -20,6 +19,7 @@ import net.liftweb.util.Mailer._
 import javax.mail.{ Authenticator, PasswordAuthentication }
 import de.freeky.web.snippet.Images
 import java.net.URL
+import org.squeryl.SessionFactory
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -115,7 +115,11 @@ class Boot {
     val connectionPool = new BoneCP(boneCPconfig)
 
     // Defining Squeryl session management
-    SquerylRecord.initWithSquerylSession(Session.create(
+//    SquerylRecord.initWithSquerylSession(Session.create(
+//      connectionPool.getConnection(),
+//      new MySQLAdapter))
+    
+    SessionFactory.concreteFactory = Some(() => Session.create(
       connectionPool.getConnection(),
       new MySQLAdapter))
     

@@ -8,7 +8,7 @@ import de.freeky.web.model._
 import net.liftweb.http.js.JsCmd
 import net.liftweb.http.js.JsCmds
 import net.liftweb.http._
-import net.liftweb.textile.TextileParser
+import net.liftmodules.textile.TextileParser
 import net.liftweb.util._
 import Helpers._
 import java.sql.Timestamp
@@ -86,7 +86,7 @@ trait ArticleSnippet[U <: Article] extends DispatchSnippet {
       ".title *" #> a.title &
         ".text *" #> TextileParser.paraFixer(TextileParser.toHtml(a.text)) &
         ".date" #> timestamp.format(a.published.getOrElse(now)) &
-        ".author" #> transaction { a.author.headOption.map(_.name).getOrElse("unknown") } &
+        ".author" #> inTransaction { a.author.headOption.map(_.name).getOrElse("unknown") } &
         ".id" #> a.id &
         ".link [href]" #> ("%s/%d".format(baseUrl, a.id)))
 
@@ -102,7 +102,7 @@ trait ArticleSnippet[U <: Article] extends DispatchSnippet {
           ".title *" #> a.title &
             ".text *" #> TextileParser.paraFixer(TextileParser.toHtml(a.text)) &
             ".date" #> timestamp.format(a.published.getOrElse(now)) &
-            ".author" #> a.author.headOption.map(_.name).getOrElse("unknown") &
+            ".author" #> inTransaction {a.author.headOption.map(_.name).getOrElse("unknown")} &
             ".id" #> a.id &
             ".link [href]" #> ("%s/%d".format(baseUrl, a.id))).getOrElse("*" #> "")
     }

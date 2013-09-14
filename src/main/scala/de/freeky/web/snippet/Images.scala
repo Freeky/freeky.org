@@ -141,7 +141,7 @@ class Images extends DispatchSnippet with Logger {
           transaction { FreekyDB.images.delete(image.id) }
         }
 
-        val imageData = ImageIO.read(new java.io.File(image.path))
+        val imageData = try { ImageIO.read(new java.io.File(image.path)) } catch { case e: Exception => new BufferedImage(1,1, BufferedImage.TYPE_INT_BGR) }
 
         ".image" #> image.toHTML(300, 300) &
           ".id" #> image.id &

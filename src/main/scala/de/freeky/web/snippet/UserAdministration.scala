@@ -2,7 +2,6 @@ package de.freeky.web.snippet
 
 import net.liftweb.http._
 import net.liftweb.util._
-import net.liftweb.proto._
 import scala.xml._
 import Helpers._
 import org.squeryl.PrimitiveTypeMode._
@@ -37,7 +36,7 @@ class UserAdministration extends StatefulSnippet {
     var entrycount = 25
     var page = 0
 
-    val userEntryTemplate = (".entry ^^" #> (n => n)).apply(in)
+    val userEntryTemplate = (".entry ^^" #> ((n: NodeSeq) => n)).apply(in)
     
     def buildUserTable(entries: List[User], template: NodeSeq) = {
       entries.flatMap({ entry =>

@@ -8,7 +8,7 @@ import Helpers._
 import org.squeryl.PrimitiveTypeMode._
 import de.freeky.web.model._
 import S._
-import net.liftweb.textile._
+import net.liftmodules.textile._
 import net.liftweb.http.js.JsCmds
 import java.sql.Timestamp
 import de.freeky.web.lib.AjaxFactory._
@@ -46,8 +46,8 @@ class Static extends DispatchSnippet {
   }
 
   def list = {
-    transaction {
-      "*" #> from(FreekyDB.staticPages)(sp => select(sp)).map(page =>
+    
+      "*" #> inTransaction { from(FreekyDB.staticPages)(sp => select(sp)).map(page =>
         ".id" #> Text(page.id.toString) &
           ".name" #> Text(page.name) &
           ".editlink [href]" #> "/administration/staticpage/edit/%d".format(page.id))

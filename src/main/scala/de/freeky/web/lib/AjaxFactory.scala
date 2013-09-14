@@ -4,7 +4,6 @@ import net.liftweb.http.js.JsCmd
 import net.liftweb.http.S
 import net.liftweb.util._
 import net.liftweb.http._
-import net.liftweb.proto.ProtoRules
 import Helpers._
 import net.liftweb.http.js.JE.JsRaw
 
