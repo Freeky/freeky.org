@@ -6,11 +6,14 @@
 </head>
 <body class="lift:content_id=main">
 	<div id="main" class="lift:surround?with=default;at=content">
-		<form class="lift:Mailer.sendform?form=POST">
-		   To: <input type="text" class="to">example@host.com</input><br />
-		   Text: <textarea class="text">Some Text</textarea><br />
-		   <input type="submit" class="submit">Submit-Button</input>
-		</form>
+		<div class="default-content">
+			<form class="lift:Mailer.sendform?form=POST">
+				To: <input type="text" class="to">example@host.com</input><br />
+				Text:
+				<textarea class="text">Some Text</textarea>
+				<br /> <input type="submit" class="submit">Submit-Button</input>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

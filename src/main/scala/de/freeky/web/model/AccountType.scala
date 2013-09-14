@@ -15,11 +15,20 @@ class AccountType(val id: Long,
     var rSendMail: Boolean,
     var rEditStaticPages: Boolean,
     var rEditBlog: Boolean,
+    var rUseForum: Boolean,
+    var rAdministrateForums: Boolean,
     var rManageImages: Boolean) extends KeyedEntity[Long] {
   
-  def this() = this(0, "", None, false, false, false, false, false, false, false)
+  def this() = this(0, "", None, false, false, false, false, false, false, false, false, false)
+  
+  def rAdmin: Boolean = {
+    rAdministrateUsers ||
+    rAdministrateForums
+  }
   
   lazy val users: OneToMany[User] = FreekyDB.accountTypeToUser.left(this)
+  lazy val allocators = FreekyDB.accountTypeAssignations.right(this)
+  lazy val allocates = FreekyDB.accountTypeAssignations.left(this)
   
   def hasAdminrights = rAdministrateUsers || rEditBlog || rEditProjects || rEditStaticPages
 }

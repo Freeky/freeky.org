@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Near Infinity</title>
+</head>
+<body class="lift:content_id=main">
+	<div id="main" class="lift:surround?with=default;at=content">
+		<div class="default-contnt">
+			<h2>Forum Administration</h2>
+			<div>
+				<form class="lift:Forum.editforum?form=POST">
+					Name: <input type="text" class="name forumname"></input><br />
+					Description: <br />
+					<textarea class="description"></textarea>
+					<br /> Parent: <select class="parent"><option>None</option></select><br />
+					Order: <input type="text" class="order"></input><br />
+					<button type="submit" class="submit">save</button>
+					<button type="submit" class="delete">save</button>
+					<br /> Moderators: <input type="text" class="newmoderatorname" />
+					<div id="moderatorlist">
+						<div class="moderatorentry">
+							<span class="moderatorname">Nobody</span> <a
+								class="removemoderator" href="/">X</a>
+						</div>
+					</div>
+					<br /> Read Access: <select class="newreadaccess"><option>Player</option></select><br />
+					<div id="readaccesslist">
+						<div class="readaccessentry">
+							<span class="readaccessname">Everyone</span> <a
+								class="removereadaccess" href="/">X</a>
+						</div>
+					</div>
+					<br /> Write Access: <select class="newwriteaccess"><option>Player</option></select><br />
+					<div id="writeaccesslist">
+						<div class="writeaccessentry">
+							<span class="writeaccessname">Everyone</span> <a
+								class="removewriteaccess" href="/">X</a>
+						</div>
+					</div>
+					<br />
+					<br />
+				</form>
+			</div>
+			<div class="lift:Forum.administrationoverview">
+				<select class="entrycount"><option>10</option></select>
+				<button type="submit" class="prevpage">prev</button>
+				<span id="current_page"><span class="page">0</span> </span>
+				<button type="submit" class="nextpage">next</button>
+				Name: <input type="text" class="namefilter"></input>
+				<table>
+					<thead>
+						<tr>
+							<td>id</td>
+							<td>name</td>
+							<td>Parent</td>
+							<td>Order</td>
+							<td>edit link</td>
+						</tr>
+					</thead>
+					<tbody id="forum_table">
+						<tr class="entry">
+							<td><span class="id">0</span></td>
+							<td><span class="name">name</span></td>
+							<td><span class="parent">parent</span></td>
+							<td><span class="order">1000</span></td>
+							<td><a class="editlink" href="/">edit</a></td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,5 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:lift="http://liftweb.net/">
+<!doctype html>
+<html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"></meta>
 <link href="/css/screen.css" type="text/css" rel="stylesheet"
@@ -9,73 +9,54 @@
 <script id="jquery" src="/classpath/jquery.js" type="text/javascript"></script>
 </head>
 <body>
-	<div class="container">
-		<div class="containerbox headerbox">
-			<div class="logo">
-				<span class="lift:Menu.item?linkToSelf=true&name=home;"> <img
-					src="/images/logo.png" alt="Freeky.org"></img>
-				</span>
-			</div>
-			<div class="headerform">
-				<form class="lift:UserAction.login?form=POST">
-					Email: <input type="text" class="email"></input> Password: <input
-						type="password" class="password"></input>
-					<button type="submit" class="submit">submit</button>
-				</form>
-				<form class="lift:UserAction.status?form=POST">
-					Logged in as: <span class="username">username</span> <span
-						class="lift:Menu.item?name=options">Options</span>
-					<button type="submit" class="logout">logoutbtn</button>
-				</form>
+	<div id="page" class="page">
+		<div id="header" class="header">
+			<div id="navbar" class="navbar">
+				<div id="logo" class="logo">
+					<span class="lift:Menu.item?linkToSelf=true&name=home;"> <img
+						src="/images/logo.png" alt="Freeky.org"></img>
+					</span>
+				</div>
+				<div class="headerform">
+					<form class="lift:UserAction.login?form=POST">
+						Email: <input type="text" class="email"></input> Password: <input
+							type="password" class="password"></input>
+						<button type="submit" class="submit">submit</button>
+					</form>
+					<form class="lift:UserAction.status?form=POST">
+						Logged in as: <span class="username">username</span> <span
+							class="lift:Menu.item?name=options">Options</span>
+						<button type="submit" class="logout">logoutbtn</button>
+					</form>
+				</div>
+				<div id="menu" class="menu">
+					<div class="lift:Menu.builder?linkToSelf=true&expandAll=true&ul:class=menu-container&li:class=menu-item;"></div>
+				</div>
 			</div>
 		</div>
-		<div>
-			<div class="column sidebar containerbox">
-				<div class="lift:Menu.builder?linkToSelf=true&expandAll=true;"></div>
+		<div id="content" class="content">
+			<div class="lift:msgs">
+				<lift:error_msg>Error:</lift:error_msg>
+				<lift:error_class>errorBox</lift:error_class>
+				<lift:warning_msg>Warning:</lift:warning_msg>
+				<lift:warning_class>warningBox</lift:warning_class>
+				<lift:notice_msg>Note:</lift:notice_msg>
+				<lift:notice_class>noticeBox</lift:notice_class>
 			</div>
-			<div class="column contentbox containerbox">
-				<div class="lift:msgs">
-					<lift:error_msg>Error:</lift:error_msg>
-					<lift:error_class>errorBox</lift:error_class>
-					<lift:warning_msg>Warning:</lift:warning_msg>
-					<lift:warning_class>warningBox</lift:warning_class>
-					<lift:notice_msg>Note:</lift:notice_msg>
-					<lift:notice_class>noticeBox</lift:notice_class>
-				</div>
-				<lift:bind name="content" />
-			</div>
-			<div class="column sidebar containerbox">
-				<center>
-					<b>Weather in Munich</b>
-				</center>
-				<!-- wetter.com button 160x175-->
-				<div id="wettercom-button-542c4a8f7cb3621c7240aa179a4b502e">
-					<link id="wettercom-css"
-						href="http://www.wetter.com/css/woys3c.css?20518,542c4a8f7cb3621c7240aa179a4b502e"
-						rel="stylesheet" type="text/css" />
-					<div id="wettercom-woys-542c4a8f7cb3621c7240aa179a4b502e"></div>
-					<div id="cityTitle">
-						<a
-							href="http://www.wetter.com/wetter_aktuell/wettervorhersage/3_tagesvorhersage/?id=DE0006515"
-							target="_blank">Weather M&uuml;nchen</a>
-					</div>
-					<div id="logo">
-						<a href="http://www.wetter.com" target="_blank"><img
-							id="wettercom-logo"
-							src="http://www.wetter.com/img/websitetools/woys/logo.png"
-							alt="wetter.com" title="wetter.com" /></a>
-					</div>
-					<script type="text/javascript"
-						src="http://www.wetter.com/js/woys3c.js?20518,542c4a8f7cb3621c7240aa179a4b502e"></script>
-				</div>
-				<!-- wetter.com button 160x175-->
-			</div>
-			<br> <br />
-			<div class="column span-23 last footer">
+			<lift:bind name="content" />
+		</div>
+		<div id="footer" class="footer">
 				Copyright © 2012 - Freeky<br /> <span
 					class="lift:Menu.item?linktToSelf=true&name=impressum;">Impressum</span>
-			</div>
 		</div>
 	</div>
+	<script id="jquery" src="/js/jquery-1.8.2.min.js"
+		type="text/javascript"></script>
+	<script id="jquery-ui" src="/js/jquery-ui-1.8.23.custom.min.js"
+		type="text/javascript"></script>
+	<script id="jquery-lightbox" src="/js/lightbox.js"
+		type="text/javascript"></script>
+	<script id="json" src="/classpath/json.js" type="text/javascript"></script>
+	<script id="fky" src="/js/fky.js" type="text/javascript"></script>
 </body>
 </html>

@@ -20,6 +20,7 @@ import javax.mail.{ Authenticator, PasswordAuthentication }
 import de.freeky.web.snippet.Images
 import java.net.URL
 import org.squeryl.SessionFactory
+import net.liftmodules.textile._
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -36,18 +37,22 @@ class Boot {
 
     // Build SiteMap
     val entries = List(
+      // Menu Standard
       Menu("home", S ? "home") / "index",
       Menu(S ? "blog") / "blog",
       Menu(S ? "projects") / "projects",
       Menu(S ? "about") / "about",
-      Menu(S ? "register") / "register" >> Hidden >> If(() => !User.loggedIn_?(), S ? "no.permission"),
-      Menu("options", S ? "options") / "options" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission") >> LocGroup("main"),
+      Menu(S ? "forum") / "forum",
+      // Menu Forum
+      Menu(S ? "topic") / "topic" >> Hidden,
+      Menu(S ? "topic.new") / "topic" / "new" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
       Menu(S ? "administration") / "administration" >> If(() => User.rights.hasAdminrights, S ? "no.permission") submenus (
+        Menu("administrate.forums", S ? "administrate.forums") / "administration" / "forums" >> If(() => (User.rights.rAdministrateForums), S ? "no.permission"),
+        Menu("administrate.users", S ? "administrate.users") / "administration" / "users" >> If(() => (User.rights.rAdministrateUsers), S ? "no.permission"),
         Menu(S ? "blog.list") / "blog" / "list" >> If(() => User.rights.rEditBlog, S ? "no.permission"),
         Menu(S ? "blog.create") / "blog" / "create" >> If(() => User.rights.rEditBlog, S ? "no.permission"),
         Menu(S ? "blog.edit") / "blog" / "edit" >> Hidden >> If(() => User.rights.rEditBlog, S ? "no.permission"),
         Menu(S ? "blog.delete") / "blog" / "delete" >> Hidden >> If(() => User.rights.rEditBlog, S ? "no.permission"),
-        Menu("administrate.users", S ? "administrate.users") / "administration" / "users" >> If(() => (User.rights.rAdministrateUsers), S ? "no.permission"),
         Menu("edit.projects", S ? "edit.projects") / "edit" / "project" >> If(() => (User.rights.rEditProjects), S ? "no.permission"),
         Menu("new.project", S ? "new.projects") / "new" / "project" >> If(() => (User.rights.rEditProjects), S ? "no.permission"),
         //Menu("send.mail", S ? "send.mail") / "administration" / "sendmail" >> If(() => (User.rights.rSendMail), S ? "no.permission"),
@@ -56,6 +61,8 @@ class Boot {
         Menu(S ? "image.list") / "image" / "list" >> If(() => User.rights.rManageImages, S ? "no.permission"),
         Menu(S ? "image.upload") / "image" / "upload" >> If(() => User.rights.rManageImages, S ? "no.permission"),
         Menu(S ? "image.detail") / "image" / "detail" >> Hidden >> If(() => User.rights.rManageImages, S ? "no.permission")),
+      Menu(S ? "register") / "register" >> Hidden >> If(() => !User.loggedIn_?(), S ? "no.permission"),
+      Menu("options", S ? "options") / "options" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission") >> LocGroup("main"),
       Menu("changemail", S ? "change.mail") / "options" / "changemail" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
       Menu("changepassword", S ? "change.password") / "options" / "changepassword" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
       Menu("deleteaccount", S ? "delete.account") / "options" / "deleteaccount" >> Hidden >> If(() => User.loggedIn_?(), S ? "no.permission"),
@@ -183,6 +190,31 @@ class Boot {
       case RewriteRequest(
         ParsePath(List("image", "detail", id), _, _, _), _, _) if (id.forall(_.isDigit)) =>
         RewriteResponse("image" :: "detail" :: Nil, Map("id" -> id))
+      // Forum
+      case RewriteRequest(
+        ParsePath(List("administration", "forums", forumId), _, _, _), _, _) if (forumId.forall(_.isDigit)) =>
+        RewriteResponse("administration" :: "forums" :: Nil, Map("forumid" -> forumId))
+      case RewriteRequest(
+        ParsePath(List("forum", forumid), _, _, _), _, _) if (forumid.forall(_.isDigit)) =>
+        RewriteResponse("forum" :: Nil, Map("forumid" -> forumid))
+      case RewriteRequest(
+        ParsePath(List("topic", topicid), _, _, _), _, _) if (topicid.forall(_.isDigit)) =>
+        RewriteResponse("topic" :: Nil, Map("topicid" -> topicid))
+      case RewriteRequest(
+        ParsePath(List("topic", topicid, "page", page), _, _, _), _, _) if (topicid.forall(_.isDigit) && page.forall(_.isDigit)) =>
+        RewriteResponse("topic" :: Nil, Map("topicid" -> topicid, "page" -> page))
+      case RewriteRequest(
+        ParsePath(List("post", postid), _, _, _), _, _) if (postid.forall(_.isDigit)) =>
+        RewriteResponse("topic" :: Nil, Map("postid" -> postid))
+      case RewriteRequest(
+        ParsePath(List("topic", "new", forumid), _, _, _), _, _) if (forumid.forall(_.isDigit)) =>
+        RewriteResponse("topic" :: "new" :: Nil, Map("forumid" -> forumid))
+      case RewriteRequest(
+        ParsePath(List("topic", "answear", topicid), _, _, _), _, _) if (topicid.forall(_.isDigit)) =>
+        RewriteResponse("topic" :: "new" :: Nil, Map("topicid" -> topicid))
+      case RewriteRequest(
+        ParsePath(List("post", "edit", postid), _, _, _), _, _) if (postid.forall(_.isDigit)) =>
+        RewriteResponse("topic" :: "new" :: Nil, Map("postid" -> postid))
     }
   }
 }
