@@ -75,6 +75,14 @@ textarea.posttext {width:100%;}
 .editforum {background-color: #00a8c6; padding: 3px 7px; color: #fff; margin: 10px; display:inline-block;}
 .newtopic {background-color: #00a8c6; padding: 3px 7px; color: #fff; margin: 10px; display:inline-block;}
 .answear {background-color: #00a8c6; padding: 3px 7px; color: #fff; margin: 10px; display:inline-block;}
+.topichead {margin-bottom: 10px;}
+.postentries {list-style-type: none;}
+.postentry {border: 1px solid #aaa; margin-bottom: 10px; display: block;}
+.postheader {width: 100%; position: relative; padding: 0px; background-color: #555; display: inline-block; color: #fff;}
+.postdescription {padding: 3px;}
+.postcommands {position: absolute; top: 0px; right: 0px; padding: 3px;}
+.postcontent p,h1,h2,h3,h4,h5,h6 {margin: 0px;}
+.postcontent {padding: 5px;}
 
 /* Messages   */
 .errorBox {border: 1px solid red; background-color: #f77; padding: 5px; margin-bottom: 15px;}
