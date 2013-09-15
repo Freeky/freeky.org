@@ -11,57 +11,83 @@
 		<div class="lift:Forum.trace">Forum » shit » went » serious</div>
 		<div class="lift:Forum.overview">
 			<h1 class="forumname">Forum</h1>
-			<a class="editforum" href="/">edit forum</a><br />
-			<table id="forumlist" class="forumlist">
-				<thead>
-					<tr>
-						<td>Forum</td>
-						<td>Topics</td>
-						<td>Posts</td>
-						<td>Last Post</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="forumentry">
-						<td><span class="forumname">Forum</span> <br /> <span class="forumdescription">This
-								Forum is about nothing</span> <br /> <span class="forumsubforums">Subforums: <span
-								class="subforums">None</span>
-						</span> <br /> <span class="forummoderators">Moderators: <span class="moderators">None</span>
-						</span></td>
-						<td><span class="topiccount">0</span></td>
-						<td><span class="postcount">0</span></td>
-						<td><div class="lastpost">
-								from <span class="lastpostuser">Unknown</span> <a class="lastpostlink" href="/">^</a> <br />
-								at <span class="lastposttime">01/01/2011</span>
-							</div></td>
-					</tr>
-				</tbody>
-			</table>
+			<a class="editforum" href="/">Edit forum</a>
+			<div id="forumlist" class="forumlist">
+				<div class="forumlist-header">
+					Forum
+				</div>
+				<ol class="forumlist-entries">
+					<li class="forumlist-entry">
+						<div class="foruminfo">
+							<div class="forumtext">
+								<h2>
+									<span class="forumname">Forum</span>
+								</h2>
+								<div class="forumdescription">This Forum is about nothing</div>
+								<dl>
+									<span class="forumsubforums">
+										<dt>Subforums:</dt>
+										<dd>
+											<span class="subforums">None</span>
+										</dd>
+									</span>
+									<span class="forummoderators">
+										<dt>Moderators:</dt>
+										<dd>
+											<span class="moderators">None</span>
+										</dd>
+									</span>
+								</dl>
+								<dl>
+									<dt>Topics:</dt>
+									<dd>
+										<span class="topiccount">0</span>
+									</dd>
+									<dt>Posts:</dt>
+									<dd>
+										<span class="postcount">0</span>
+									</dd>
+								</dl>
+							</div>
+							<div class="lastpost">
+								from <span class="lastpostuser">Unknown</span> <a
+									class="lastpostlink" href="/">^</a> <br /> at <span
+									class="lastposttime">01/01/2011</span>
+							</div>
+						</div>
+					</li>
+				</ol>
+			</div>
 			<a class="newtopic" href="/">New Topic</a><br />
-			<table id="topiclist" class="topiclist">
-				<thead>
-					<tr>
-						<td>Topics</td>
-						<td>Replies</td>
-						<td>Views</td>
-						<td>Last Post</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="topicentry">
-						<td><span class="topicname">Topic</span> <br /> from <span class="topicauthor">Author</span>
-							at <span class="topictime">01/01/2011</span>
-							<div class="topicpages">Page: 
-								<a class="pagelink" href="/"><span class="pagenumber">0</span></a>
-							</div></td>
-						<td><span class="topicreplies">0</span></td>
-						<td><span class="topicviews">0</span></td>
-						<td><span class="lastpost">from <span class="lastpostuser">Unknown</span> <a
-								class="lastpostlink" href="/">^</a> <br />at <span class="lastposttime">01/01/2011</span>
-						</span></td>
-					</tr>
-				</tbody>
-			</table>
+			<div id="topiclist" class="topiclist">
+				<div class="topiclist-header">
+					Topics
+				</div>
+				<ol class="topiclist-entries">
+					<li class="topiclist-entry">
+						<div class="topicinfo">
+							<div class="topictext">
+								<h3>
+									<span class="topicname">Forum</span>
+								</h3>
+								<span class="topicauthor">Author</span> <span class="topicdate">01/01/2011</span> 
+								<span class="topicpages">
+									Page: <a class="pagelink" href="/"><span class="pagenumber">0</span></a>
+								</span>
+							</div>
+							<div class="topicstats">
+								Replies: <span class="topicreplies">0</span> <br />
+								Views: <span class="topicviews">0</span>
+							</div>
+							<div class="lastpost">
+								from <span class="lastpostuser">Unknown</span> <a
+									class="lastpostlink" href="/">^</a> <br />at <span
+									class="lastposttime">01/01/2011</span>
+							</div>
+						</div>
+					</li>
+				</ol>
+			</div>
 			<a class="newtopic" href="/">New Topic</a>
 		</div>
 	</div>

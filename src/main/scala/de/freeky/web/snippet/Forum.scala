@@ -322,7 +322,7 @@ class Forum extends StatefulSnippet {
     }
 
     if (forums.size > 0) {
-      ".forumentry" #> forums.map(forum =>
+      ".forumlist-entry" #> forums.map(forum =>
         ".forumname" #> forum.mkLink &
           ".forumdescription" #> forum.description &
           ".forumsubforums" #> buildSubForums(Some(forum.id)) &
@@ -373,7 +373,7 @@ class Forum extends StatefulSnippet {
           ".lastposttime" #> Formater.format(post.time) &
           ".lastpostlink [href]" #> post.linkAddress
       }
-      case _ => "*" #> "No Posts"
+      case _ => "* *" #> "No Posts"
     }
   }
 
@@ -383,10 +383,11 @@ class Forum extends StatefulSnippet {
     }
 
     if (topics.size > 0) {
-      ".topicentry" #> topics.map(topic => {
+      ".topiclist-entry" #> topics.map(topic => {
         ".topicname" #> <span>{ if (topic.isSticky) Text("Sticky: ") }{ ForumTopic.mkLink(topic) }</span> &
           ".topicauthor" #> inTransaction { topic.user.map(_.name) } &
-          ".topictime" #> Formater.format(topic.time) &
+          ".topictime" #> Formater.formatTime(topic.time) &
+          ".topicdate" #> Formater.formatDate(topic.time) &
           ".topicreplies" #> topic.replies &
           ".topicviews" #> topic.views &
           ".lastpost" #> buildLastPost(topic) &
@@ -486,7 +487,7 @@ class Forum extends StatefulSnippet {
   def trace(in: NodeSeq): NodeSeq = {
     var trace: NodeSeq = NodeSeq.Empty
     var curForum: Option[model.Forum] = Empty
-    val spacer: Text = Text(" Â» ")
+    val spacer: Text = Text(" » ")
 
     // Check Post ID
     S.param("postid").map(_.toLong).map(pid => {

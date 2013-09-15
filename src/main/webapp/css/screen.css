@@ -26,9 +26,9 @@ body {
 .default-content {max-width: 720px; width: 100%; margin: 0 auto;}
 
 /* HTML Elements */
-input[type=submit], button { border: 0px solid black; background-color: #00a8c6; padding: 3px 7px; color: #fff}
+input[type=submit], button { border: 0px solid black; background-color: #00a8c6; padding: 3px 7px; color: #fff;}
 input[type=text], input[type=password] { border: 0px solid black; border-bottom: 2px solid black; background-color: #00a8c6; padding: 3px 7px; color: #fff;}
-h1, h2, h3, h4, h5, h6 {color: #8fbe00}
+h1, h2, h3, h4, h5, h6 {color: #8fbe00; margin: 5px;}
 a {color: #8fbe00}
 table {width: 100%;}
 blockquote:before, blockquote:after, q:before, q:after {content:"";}
@@ -41,21 +41,40 @@ textarea {width: 100%; min-height: 300px;}
 hr {background:#ddd;color:#ddd;clear:both;float:none;width:100%;height:.1em;margin:0 0 1.45em;border:none;}
 
 /* Forum */
-.forumname {font-size:2em;}
-.topicname {font-size:1.3em}
 .postheader {float:left;}
 .postcommands {float:right;}
-.topiccommands {float:left;}
-.topicpages {float:right}
 .pagelink {padding: 2px}
 .moderatorentry {float: left; padding-left: 5px;}
 .readaccessentry {float: left; padding-left: 5px;}
 .writeaccessentry {float: left; padding-left: 5px;}
 textarea.description {width: 500px;height:30px;}
 input.forumname {width:400px;font-size:1em;}
+input.topictitle {width:700px;font-size:0.8em;}
 .selectedpost {background-color: #cbe7f7;}
-.topictitle {font-size:1em;width:610px;}
+/*.topictitle {font-size:1em;width:610px;}*/
 textarea.posttext {width:100%;}
+.forumlist {border: 1px solid #aaa; padding: 10px;}
+.forumlist ol {list-style-type: none;}
+.forumlist h2,dl,dd,dt,ol {margin: 0px; padding: 0px;}
+.forumlist dd,dt {display: inline; margin-right: 5px;}
+.forumicon {width: 36px; height: 36px;}
+.forumtext {}
+.foruminfo {position: relative; padding-left:3px;}
+.lastpost {position: absolute; top: 0px; right: 0px; width: 200px;}
+.forumlist-header {background-color: #40c0cb; padding: 5px 5px 5px 10px; font-size: 1.2em;}
+.forumlist-entry {background-color: #ddd; margin-top: 2px;}
+.subforums {margin-right: 5px;}
+.topiclist {border: 1px solid #aaa; padding: 10px;}
+.topiclist ol {list-style-type: none;}
+.topiclist h3,ol {margin: 0px; padding 0px;}
+.topicinfo {position: relative; padding-left: 3px;}
+.topicstats {position: absolute; top: 0px; right: 200px; width: 150px;}
+.topiclist-header {background-color: #40c0cb; padding: 5px 5px 5px 10px; font-size: 1.2em;}
+.topiclist-entry {background-color: #ddd; margin-top: 2px;}
+.topictext {right: 350px;}
+.editforum {background-color: #00a8c6; padding: 3px 7px; color: #fff; margin: 10px; display:inline-block;}
+.newtopic {background-color: #00a8c6; padding: 3px 7px; color: #fff; margin: 10px; display:inline-block;}
+.answear {background-color: #00a8c6; padding: 3px 7px; color: #fff; margin: 10px; display:inline-block;}
 
 /* Messages   */
 .errorBox {border: 1px solid red; background-color: #f77; padding: 5px; margin-bottom: 15px;}
